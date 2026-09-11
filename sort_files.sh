@@ -61,38 +61,6 @@ EOF
     exit 0
 }
 
-while [[ $# -gt 0 ]]; do
-    case "$1" in
-        -d)
-            SOURCE_DIR="$2"
-            shift 2
-            ;;
-        -o)
-            OUTPUT_BASE="$2"
-            shift 2
-            ;;
-        --once)
-            ONCE_MODE=true
-            shift
-            ;;
-        -h|--help)
-            show_help
-            ;;
-        --install)
-            do_install
-            exit 0
-            ;;
-        --uninstall)
-            do_uninstall
-            exit 0
-            ;;
-        *)
-            echo "Error: Unknown option '$1'. Use -h for help." >&2
-            exit 1
-            ;;
-    esac
-done
-
 # Install / Uninstall helpers
 do_install() {
     local install_dir="$HOME/.local/bin"
@@ -151,6 +119,40 @@ do_uninstall() {
     echo "Note: The script is still installed at ~/.local/bin/sort_files.sh."
     echo "Kill any running instance with:  pkill -f sort_files.sh"
 }
+
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -d)
+            SOURCE_DIR="$2"
+            shift 2
+            ;;
+        -o)
+            OUTPUT_BASE="$2"
+            shift 2
+            ;;
+        --once)
+            ONCE_MODE=true
+            shift
+            ;;
+        -h|--help)
+            show_help
+            ;;
+        --install)
+            do_install
+            exit 0
+            ;;
+        --uninstall)
+            do_uninstall
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option '$1'. Use -h for help." >&2
+            exit 1
+            ;;
+    esac
+done
+
 
 # Ensure source directory exists
 if [[ ! -d "$SOURCE_DIR" ]]; then
